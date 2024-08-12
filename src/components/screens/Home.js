@@ -14,9 +14,11 @@ const Home = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
-        setData(result.posts);
-      });
+        if (result.posts) {
+          setData(result.posts);
+        }
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   const likePost = (id) => {
@@ -33,13 +35,12 @@ const Home = () => {
       .then((res) => res.json())
       .then((result) => {
         const newData = data.map((item) => {
-          if (item._id == result._id) {
+          if (item._id === result._id) {
             return result;
           } else {
             return item;
           }
         });
-
         setData(newData);
       })
       .catch((err) => {
@@ -61,13 +62,12 @@ const Home = () => {
       .then((res) => res.json())
       .then((result) => {
         const newData = data.map((item) => {
-          if (item._id == result._id) {
+          if (item._id === result._id) {
             return result;
           } else {
             return item;
           }
         });
-
         setData(newData);
       })
       .catch((err) => {
@@ -90,13 +90,12 @@ const Home = () => {
       .then((res) => res.json())
       .then((result) => {
         const newData = data.map((item) => {
-          if (item._id == result._id) {
+          if (item._id === result._id) {
             return result;
           } else {
             return item;
           }
         });
-
         setData(newData);
       })
       .catch((err) => {
@@ -132,8 +131,20 @@ const Home = () => {
           return (
             <div className="card home-card" key={item._id}>
               <h5 style={{ padding: "24px" }}>
-                <Link to={item.postedBy._id !== state._id ? "/profile/"  + item.postedBy._id : "/profile"}>{item.postedBy.name}</Link>
-                {item.postedBy._id === state._id && (
+                {item.postedBy && item.postedBy._id ? (
+                  <Link
+                    to={
+                      item.postedBy._id !== state?._id
+                        ? "/profile/" + item.postedBy._id
+                        : "/profile"
+                    }
+                  >
+                    {item.postedBy.name}
+                  </Link>
+                ) : (
+                  <span>Unknown User</span>
+                )}
+                {item.postedBy && item.postedBy._id === state?._id && (
                   <i
                     className="material-icons"
                     style={{ float: "right", color: "red" }}
@@ -144,10 +155,10 @@ const Home = () => {
                 )}
               </h5>
               <div className="card-image">
-                <img src={item.pic} alt="" />
+                <img src={item.pic} alt={item.title || "Post image"} />
               </div>
               <div className="card-content">
-                {item.likes.includes(state._id) ? (
+                {item.likes && item.likes.includes(state?._id) ? (
                   <i
                     className="material-icons"
                     style={{ color: "red" }}
@@ -164,19 +175,20 @@ const Home = () => {
                     favorite_border
                   </i>
                 )}
-                <h6>{item.likes.length} Likes</h6>
+                <h6>{item.likes ? item.likes.length : 0} Likes</h6>
                 <h6>{item.title}</h6>
                 <p>{item.body}</p>
-                {item.comments.map((record) => {
-                  return (
-                    <h6 key={record._id}>
-                      <span style={{ fontWeight: "500" }}>
-                        {record.postedBy.name}
-                      </span>{" "}
-                      {record.text}
-                    </h6>
-                  );
-                })}
+                {item.comments &&
+                  item.comments.map((record) => {
+                    return (
+                      <h6 key={record._id}>
+                        <span style={{ fontWeight: "500" }}>
+                          {record.postedBy ? record.postedBy.name : "Unknown"}
+                        </span>{" "}
+                        {record.text}
+                      </h6>
+                    );
+                  })}
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
