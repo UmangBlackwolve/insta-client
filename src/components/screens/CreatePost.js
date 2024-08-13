@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
-
+import {baseurl} from "../../reducers/userReducer"
 const CreatePost = () => {
 
   const [title, setTitle] = useState("")
@@ -12,7 +12,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     if (url) {
-      fetch("http://localhost:5000/createpost", {
+      fetch(`${baseurl}/createpost`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",

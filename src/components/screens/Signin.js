@@ -1,7 +1,8 @@
-import React, { useState , useContext , } from "react";
+import React, { useState, useContext, } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import M from "materialize-css";
 import { UserContext } from "../../App";
+import { baseurl } from "../../reducers/userReducer";
 
 const SignIn = () => {
   const { state, dispatch } = useContext(UserContext)
@@ -15,7 +16,8 @@ const SignIn = () => {
     //     M.toast({ html: "invalid email", classes: "#c62828 red darken-3" })
     //     return
     // }
-    fetch("http://localhost:5000/signin", {
+    console.log("🚀 ~ PostData ~ baseurl:", baseurl)
+    fetch(`${baseurl}/signin`, {
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -45,7 +47,7 @@ const SignIn = () => {
       <div className="mycard">
         <div className="card card-auth">
           <h2>Instagram</h2>
-          <input type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input type="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button className="btn waves-effect waves-light #64b5f6 blue darken-2" onClick={PostData}>Login</button>
           <h5>

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App";
 import { Link } from "react-router-dom";
+import { baseurl } from "../../reducers/userReducer";
 
 function SubscribesUserPosts() {
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/getsubpost", {
+    fetch(`${baseurl}/getsubpost`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -20,7 +21,7 @@ function SubscribesUserPosts() {
   }, []);
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/like", {
+    fetch(`${baseurl}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +49,7 @@ function SubscribesUserPosts() {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:5000/unlike", {
+    fetch(`${baseurl}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +77,7 @@ function SubscribesUserPosts() {
   };
 
   const makeComment = (text, postId) => {
-    fetch("http://localhost:5000/comment", {
+    fetch(`${baseurl}/comment`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +106,7 @@ function SubscribesUserPosts() {
   };
 
   const deletePost = (postid) => {
-    fetch(`http://localhost:5000/deletepost/${postid}`, {
+    fetch(`${baseurl}/deletepost/${postid}`, {
       method: "delete",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),

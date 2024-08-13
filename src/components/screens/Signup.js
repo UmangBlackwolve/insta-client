@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import M from 'materialize-css'
+import { baseurl } from '../../reducers/userReducer'
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -15,7 +16,6 @@ const Signup = () => {
     if (url) {
       uploadFields()
     }
-
   }, [url])
   
   const uploadPic = (e) => {
@@ -41,7 +41,7 @@ const Signup = () => {
     //     M.toast({ html: "invalid email", classes: "#c62828 red darken-3" })
     //     return
     // }
-    fetch("http://localhost:5000/signup", {
+    fetch(`${baseurl}/signup`, {
       method: "post",
       headers: {
         "Content-Type": "application/json"

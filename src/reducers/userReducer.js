@@ -1,4 +1,6 @@
-export const initialState = null
+export const initialState = null;
+
+export const baseurl = "https://insta-server-2zdz.onrender.com"
 
 export const reducer = (state, action) => {
   if (action.type == "USER") {

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App";
 import { Link } from "react-router-dom";
+import { baseurl } from "../../reducers/userReducer";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allposts", {
+    fetch(`${baseurl}/allposts`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -22,7 +23,7 @@ const Home = () => {
   }, []);
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/like", {
+    fetch(`${baseurl}/like`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +50,7 @@ const Home = () => {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:5000/unlike", {
+    fetch(`${baseurl}/unlike`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +77,7 @@ const Home = () => {
   };
 
   const makeComment = (text, postId) => {
-    fetch("http://localhost:5000/comment", {
+    fetch(`${baseurl}/comment`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ const Home = () => {
   };
 
   const deletePost = (postid) => {
-    fetch(`http://localhost:5000/deletepost/${postid}`, {
+    fetch(`${baseurl}/deletepost/${postid}`, {
       method: "delete",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),

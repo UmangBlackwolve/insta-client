@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
+import { baseurl } from "../../reducers/userReducer";
 
 const Profile = () => {
   const [mypics, setMypics] = useState([]);
@@ -8,7 +9,7 @@ const Profile = () => {
   const [image, setImage] = useState("")
 
   useEffect(() => {
-    fetch('http://localhost:5000/mypost', {
+    fetch(`${baseurl}/mypost`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("jwt")
       }
@@ -31,7 +32,7 @@ const Profile = () => {
       })
         .then(res => res.json())
         .then(data => {
-          fetch("http://localhost:5000/updatepic", {
+          fetch(`${baseurl}/updatepic`, {
             method: "put",
             headers: {
               "Content-Type": "application/json",

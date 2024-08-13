@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
 import { useParams } from "react-router-dom";
+import { baseurl } from "../../reducers/userReducer";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -10,7 +11,7 @@ const Profile = () => {
   const [showFollow, setShowFollow] = useState(state ? !state.following.includes(userid) : true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${userid}`, {
+    fetch(`${baseurl}/user/${userid}`, {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("jwt")
       }
@@ -31,7 +32,7 @@ const Profile = () => {
   }, [userid]);
 
   const followUser = () => {
-    fetch(`http://localhost:5000/follow`, {
+    fetch(`${baseurl}/follow`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +67,7 @@ const Profile = () => {
   };
 
   const unfollowUser = () => {
-    fetch(`http://localhost:5000/unfollow`, {
+    fetch(`${baseurl}/unfollow`, {
       method: "put",
       headers: {
         "Content-Type": "application/json",

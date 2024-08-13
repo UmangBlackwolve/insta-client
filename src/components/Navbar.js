@@ -26,7 +26,7 @@ const Navbar = () => {
                 dispatch({ type: "CLEAR" });
               }}
             >
-              <i class="material-icons">arrow_forward</i>
+              <i className="material-icons">arrow_forward</i>
             </button>
           </Link>
         </li>,
