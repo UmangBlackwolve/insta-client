@@ -5,12 +5,11 @@ import { baseurl } from '../../reducers/userReducer'
 
 const Signup = () => {
   const navigate = useNavigate()
-  const [name, setname] = useState()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-
-  const [image, setImage] = useState("")
-  const [url, setUrl] = useState(undefined)
+  const [name, setname] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [image, setImage] = useState(null)
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     if (url) {
@@ -27,21 +26,17 @@ const Signup = () => {
       method: "post",
       body: data
     })
-      .then(res => res.json())
-      .then(data => {
-        setUrl(data.url)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    .then(res => res.json())
+    .then(data => {
+      setUrl(data.url)
+    })
+    .catch(err => {
+      console.error('Error uploading image:', err)
+    })
   }
+
   const uploadFields = () => {
-    // if(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
-    // {
-    //     M.toast({ html: "invalid email", classes: "#c62828 red darken-3" })
-    //     return
-    // }
-    fetch(`${baseurl}/signup`, {
+    fetch(`${baseurl}/signup`, { // Updated URL
       method: "post",
       headers: {
         "Content-Type": "application/json"
@@ -50,28 +45,37 @@ const Signup = () => {
         name,
         email,
         password,
-        pic:url
+        pic: url
       })
-    }).then(res => res.json())
-      .then(data => {
-        if (data.error) {
-          M.toast({ html: data.error, classes: "#c62828 red darken-3" })
-        } else {
-          M.toast({ html: data.message, classes: "#43a047 green darken-1" })
-          setname("")
-          setEmail("")
-          setPassword("")
-          navigate('/signin')
-        }
-      })
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (data.error) {
+        M.toast({ html: data.error, classes: "#c62828 red darken-3" })
+      } else {
+        M.toast({ html: data.message, classes: "#43a047 green darken-1" })
+        setname('')
+        setEmail('')
+        setPassword('')
+        navigate('/signin')
+      }
+    })
+    .catch(err => {
+      console.error('Failed to fetch:', err)
+    })
   }
+
   const PostData = () => {
     if (image) {
       uploadPic()
     } else {
       uploadFields()
     }
-
   }
 
   return (
