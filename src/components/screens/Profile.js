@@ -61,29 +61,20 @@ const Profile = () => {
 
   return (
     <div style={{ maxWidth: "550px", margin: "0px auto" }}>
-      <div style={{
-        margin: "18px 0px",
-        borderBottom: "1px solid grey",
-      }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-          }}
-        >
-          <div>
+      <div className="profile-main">
+        <div className="profile">
+          <div className="profile-image">
             <img
               style={{ width: "160px", height: "160px", borderRadius: "80px", objectFit: "cover" }}
               src={state ? state.pic : "loading"} alt="profile"
             />
           </div>
           <div>
-            <h4>{state?.name || "loading"}</h4>
-            <h5>{state?.email || "loading"}</h5>
+            <h4 className="profile-name">{state?.name || "loading"}</h4>
             <div style={{ display: "flex", justifyContent: "space-between", width: "108%" }}>
-              <h5>{mypics.length} Post{mypics.length !== 1 && 's'}</h5>
-              <h5>{state?.followers?.length || 0} Follower{state?.followers?.length !== 1 && 's'}</h5>
-              <h5>{state?.following?.length || 0} Following</h5>
+              <h5 className="profile-post"><span>{mypics.length}</span> Post</h5>
+              <h5 className="profile-follower"><span>{state?.followers?.length || 0}</span> Follower{state?.followers?.length !== 1 && 's'}</h5>
+              <h5 className="profile-following"><span>{state?.following?.length || 0}</span> Following</h5>
             </div>
           </div>
         </div>

@@ -93,6 +93,27 @@ nav i.material-icons {
   border-radius: 50%;
 }
 
+.profile-main {
+  margin: 18px 0px;
+  border-bottom: 1px solid grey;
+}
+.profile {
+  display: flex;
+  justify-content: space-around;
+}
+.profile-name{
+  font-size: 26px;
+  font-weight: bold;
+}
+.profile span{
+  font-weight: bolder;
+  font-size: 24px;
+}
+.profile h5{
+  font-weight: bolder;
+  font-size: 18px;
+}
+
 @media only screen and (max-width: 992px) {
   nav .brand-logo.left {
     left: 1.5rem;
@@ -108,11 +129,20 @@ nav i.material-icons {
     padding: 0 5px;
   }
   .btn {
-    padding: 8px;
+    /* padding: 8px; */
     font-size: 12px;
   }
   .home-card {
     margin: 40px auto;
   }
+  .profile-main{
+    margin: 70px 0px;
+  }
+  .profile{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+ 
 }
-                 
